@@ -1,14 +1,25 @@
 <template>
-  <div class="comic-item-card col">
+  <v-col cols="3" class="comic-item-card">
       <router-link :to="url_item">
-        <div class="card text-left">
-            <img class="card-img-top"  :src="getImgPath(comic)" alt="">
-            <div class="card-body">
-            <h4 class="card-title">{{ comic.title }}</h4>
-            </div>
+        <v-card class="card text-left" elevation="2" shaped>
+            <v-img :src="getImgPath(comic)" alt=""></v-img>
+                <v-card-title>{{ comic.title }}</v-card-title>
+            <v-rating
+          :value="4.5"
+          color="amber"
+          dense
+          half-increments
+          readonly
+          size="14"
+        ></v-rating>
+
+        <div class="grey--text ml-4">
+          4.5 (413)
         </div>
+
+        </v-card>
       </router-link>
-  </div>
+  </v-col>
 </template>
 
 <script>
@@ -45,11 +56,11 @@ export default {
 
 <style>
 .comic-item-card {
-    background-color: black;
-    width: 200px;
+    /* background-color: black;
+    width: 200px; */
 }
 .comic-item-card .card-title {
-    color: white;
+    /* color: white; */
 }
 
 .comic-item-card img {

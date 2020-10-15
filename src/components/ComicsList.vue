@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <v-container>
         <h2>comics list</h2>
-        <div class="row" v-for="comic in comics" :key="comic.id">
-            <ComicCard :id="comic.id"></ComicCard>
-        </div>
-    </div>
+        <v-row >
+            <ComicCard v-for="comic in comics" :id="comic.id" :key="comic.id"></ComicCard>
+        </v-row>
+    </v-container>
 </template>
 
 
