@@ -65,7 +65,7 @@
             </v-container>
             <v-container v-else>
                 <v-row>
-                    <p>{{ infoCharacters.data }}</p>
+                    <CharacterCard v-for="character in infoCharacters.data.results" :id="character.id" :key="character.id"></CharacterCard>
                 </v-row>
             </v-container>
         </div>
@@ -76,9 +76,13 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import CharacterCard from './CharacterCard';
 
 export default {
     name: 'ComicItem',
+    components: {
+        CharacterCard,
+    },
     data () {
         return{
             comic: null,
