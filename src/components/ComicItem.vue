@@ -8,7 +8,17 @@
             <v-row>
                 <v-col cols="5">
                     <center>
-                        <v-img :src="getImgPath(comic)" alt="" width="300px"></v-img>
+                        <v-img :src="getImgPath(comic)" alt="" width="300px"> 
+                            <!-- Transform getImgPath to computed -->
+                            <!-- <v-expand-transition>
+                                <div
+                                    v-if="hover"
+                                    class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
+                                    style="height: 100%;">
+                                    $14.99
+                                </div>
+                            </v-expand-transition> -->
+                        </v-img>
                     </center>
                 </v-col>
                 <v-col cols="7" class="container-infos-comic">
@@ -34,6 +44,7 @@
                         <v-col cols="6">
                             <v-text class="published">Writer :</v-text> <br>
                             <ul v-for="creator in comic.creators['items']" :key="creator.id">
+                                <!-- TODO Computed writers() -->
                                 <li v-if="creator.role == 'writer'">
                                     {{creator.name}}
                                 </li>
@@ -42,6 +53,7 @@
                         <v-col cols="6">
                             <v-text class="published">Penciller (cover) :</v-text> <br>
                             <ul v-for="creator in comic.creators['items']" :key="creator.id">
+                                <!-- TODO Computed pencillerCover() -->
                                 <li v-if="creator.role == 'penciller (cover)'">
                                     {{creator.name}}
                                 </li>
@@ -50,6 +62,7 @@
                         <v-col cols="6">
                             <v-text class="published">Penciller :</v-text> <br>
                             <ul v-for="creator in comic.creators['items']" :key="creator.id">
+                                <!-- TODO Computed penciller() -->
                                 <li v-if="creator.role == 'penciller' || creator.role == 'penciller (cover)'">
                                     {{creator.name}}
                                 </li>

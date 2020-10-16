@@ -1,14 +1,18 @@
 <template>
   <v-col cols="3" class="comic-item-card">
       <div v-if="loading">Loading</div>
-      <div v-else>
+      <div v-else-if="comic">
             <v-card class="card text-left" elevation="2" shaped>
-                <router-link :to="url_item">
+                <router-link :to="{name: 'ComicItem', params: {id: id}}">
                     <v-img :src="getImgPath(comic)" alt=""></v-img>
+                    <!-- computed -->
                 </router-link>
                     <v-card-title>{{ comic.title }}</v-card-title>
             </v-card>
-    </div>
+        </div>
+        <div v-else>
+            Nothing
+        </div>
   </v-col>
 </template>
 
@@ -33,8 +37,6 @@ export default {
         }
     },
     async mounted() {
-        this.url_item = '/Comic/' + this.id;
-
         try {
             const response = await axios.get('https://gateway.marvel.com:443/v1/public/comics/'+this.id+'?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92');
             this.comic = response.data.data.results[0];
