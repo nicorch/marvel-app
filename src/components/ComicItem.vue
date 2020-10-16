@@ -32,14 +32,43 @@
                             <v-text>{{ comic.dates[0].date | formatDate }}</v-text>
                         </v-col>
                         <v-col cols="6">
-
+                            <v-text class="published">Writer :</v-text> <br>
+                            <ul v-for="creator in comic.creators['items']" :key="creator.id">
+                                <li v-if="creator.role == 'writer'">
+                                    {{creator.name}}
+                                </li>
+                            </ul>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text class="published">Penciller (cover) :</v-text> <br>
+                            <ul v-for="creator in comic.creators['items']" :key="creator.id">
+                                <li v-if="creator.role == 'penciller (cover)'">
+                                    {{creator.name}}
+                                </li>
+                            </ul>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text class="published">Penciller :</v-text> <br>
+                            <ul v-for="creator in comic.creators['items']" :key="creator.id">
+                                <li v-if="creator.role == 'penciller' || creator.role == 'penciller (cover)'">
+                                    {{creator.name}}
+                                </li>
+                            </ul>
                         </v-col>
                     </v-row>
                 </v-col>
             </v-row>
-            <v-row>
-                <p>{{ infoCharacters.data.results }}</p>
-            </v-row>
+            <v-divider></v-divider>
+            <h4>Related Characters</h4>
+            <v-container v-if="infoCharacters.data.count == 0">
+                
+                Nothing
+            </v-container>
+            <v-container v-else>
+                <v-row>
+                    <p>{{ infoCharacters.data }}</p>
+                </v-row>
+            </v-container>
         </div>
     </div>
 
@@ -101,7 +130,7 @@ export default {
 .comic-title-text {
     font-weight: bold;
     text-align: start;
-    font-size: 22px;
+    font-size: 25px;
 }
 
 .comic-description {
@@ -113,5 +142,10 @@ export default {
 }
 .published {
     font-weight: bold;
+    font-size: 20px;
+}
+
+.container-infos-comic li {
+    list-style: none;
 }
 </style>
