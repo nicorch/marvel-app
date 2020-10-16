@@ -1,8 +1,14 @@
 <template>
   <v-container>
     <h1>Liste des personnages Marvel</h1>
-    <v-row>
-      <CharacterCard v-for="character in characters" :id="character.id" :key="character.id"></CharacterCard>
+    <v-row v-if="loading">
+            <v-col cols="12">
+              Loading ...
+              </v-col> 
+        </v-row>
+        <v-row v-else>
+          <CharacterCard v-for="character in characters" :id="character.id" :key="character.id"></CharacterCard>
+      
     </v-row>
   </v-container>
 </template>
@@ -27,7 +33,7 @@ export default {
   async mounted() {
     try {
 
-      const response = await axios.get("https://gateway.marvel.com:443/v1/public/characters?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92")
+      const response = await axios.get("https://gateway.marvel.com:443/v1/public/characters?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92&limit=100")
       this.characters = response.data.data.results;
     } catch (error) {
       this.errored = true;
