@@ -11,15 +11,14 @@
                         <v-img :src="getImgPath(comic)" alt="" width="300px"></v-img>
                     </center>
                 </v-col>
-                <v-col cols="7">
+                <v-col cols="7" class="container-infos-comic">
                     <div class="comic-title">
                         <p class="comic-title-text">
                             {{ comic.title }}
                         </p>
                     </div>
                     <div v-if="comic.description" class="comic-description">
-                        <p class="comic-description-text">
-                            {{ comic.description }}
+                        <p class="comic-description-text " :inner-html.prop="comic.description">
                         </p>
                     </div>
                     <div v-else>
@@ -27,18 +26,20 @@
                             Il n'y a pas de description.
                         </p>
                     </div>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text class="published">Published :</v-text> <br>
+                            <v-text>{{ comic.dates[0].date | formatDate }}</v-text>
+                        </v-col>
+                        <v-col cols="6">
+
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
             <v-row>
-
-                    <p>{{ infoCharacters.data.results }}</p>
+                <p>{{ infoCharacters.data.results }}</p>
             </v-row>
-            
-
-           
-            
-            <!-- <div v-for="comics in infosComics" :key="">
-            </div> -->
         </div>
     </div>
 
@@ -46,6 +47,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 export default {
     name: 'ComicItem',
@@ -59,6 +61,13 @@ export default {
     },
     created () {
         
+    },
+    filters: {
+        formatDate(value) {
+            if (value) {
+                return moment(String(value)).format('MM/DD/YYYY')
+            }
+        }
     },
     async mounted () {
         const idComic =  this.$route.params.id ;
@@ -99,7 +108,10 @@ export default {
     
 }
 
-.comic-description {
-
+.container-infos-comic {
+    text-align: start;
+}
+.published {
+    font-weight: bold;
 }
 </style>
