@@ -12,13 +12,26 @@
                     </center>
                 </v-col>
                 <v-col cols="7">
-                     <h2>{{ comic.title }}</h2>
-                    <div v-if="comic.description">
-                        <p>{{ comic.description }}</p>
+                    <div class="comic-title">
+                        <p class="comic-title-text">
+                            {{ comic.title }}
+                        </p>
                     </div>
-                    <div v-else>il n'y a pas  de description</div>
-                    <p>{{ infoCharacters.data.results }}</p>
+                    <div v-if="comic.description" class="comic-description">
+                        <p class="comic-description-text">
+                            {{ comic.description }}
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p>
+                            Il n'y a pas de description.
+                        </p>
+                    </div>
                 </v-col>
+            </v-row>
+            <v-row>
+
+                    <p>{{ infoCharacters.data.results }}</p>
             </v-row>
             
 
@@ -73,5 +86,20 @@ export default {
 </script>
 
 <style>
+.comic-title {
+    margin-bottom: 10px;
+}
+.comic-title-text {
+    font-weight: bold;
+    text-align: start;
+    font-size: 22px;
+}
 
+.comic-description {
+    
+}
+
+.comic-description {
+
+}
 </style>
