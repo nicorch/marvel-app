@@ -1,24 +1,14 @@
 <template>
   <v-col cols="3" class="comic-item-card">
-      <router-link :to="url_item">
-        <v-card class="card text-left" elevation="2" shaped>
-            <v-img :src="getImgPath(comic)" alt=""></v-img>
-                <v-card-title>{{ comic.title }}</v-card-title>
-            <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ml-4">
-          4.5 (413)
-        </div>
-
-        </v-card>
-      </router-link>
+      <div v-if="loading">Loading</div>
+      <div v-else>
+            <v-card class="card text-left" elevation="2" shaped>
+                <router-link :to="url_item">
+                    <v-img :src="getImgPath(comic)" alt=""></v-img>
+                </router-link>
+                    <v-card-title>{{ comic.title }}</v-card-title>
+            </v-card>
+    </div>
   </v-col>
 </template>
 
@@ -34,6 +24,7 @@ export default {
         return {
             comic: null,
             url_item: null,
+            loading: true,
         }
     },
     methods: {
@@ -50,6 +41,7 @@ export default {
         } catch (error) {
             console.log(error);
         }
+        this.loading = false
     }
 }
 </script>

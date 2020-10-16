@@ -1,7 +1,12 @@
 <template>
     <v-container>
         <h2>comics list</h2>
-        <v-row >
+        <v-row v-if="loading">
+            <v-col cols="12">
+              Loading ...
+              </v-col> 
+        </v-row>
+        <v-row v-else>
             <ComicCard v-for="comic in comics" :id="comic.id" :key="comic.id"></ComicCard>
         </v-row>
     </v-container>
