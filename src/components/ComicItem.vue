@@ -61,7 +61,6 @@
             <v-divider></v-divider>
             <h4>Related Characters</h4>
             <v-container v-if="infoCharacters.data.count == 0">
-                
                 Nothing
             </v-container>
             <v-container v-else>
@@ -94,7 +93,7 @@ export default {
     filters: {
         formatDate(value) {
             if (value) {
-                return moment(String(value)).format('MM/DD/YYYY')
+                return moment(String(value)).format('MMMM DD, YYYY')
             }
         }
     },
