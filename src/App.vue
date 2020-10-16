@@ -2,10 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/Comics">CL</router-link> |
-      <router-link to="/Comic/5">CI</router-link> |
-      <router-link to="/Characters">ChaL</router-link> |
-      <router-link to="/Character/5">ChaI</router-link>
+      <router-link to="/Comics">Comic's list</router-link> |
+      <router-link to="/Characters">Character's list</router-link> 
     </div>
     <router-view/>
   </div>
