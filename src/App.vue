@@ -1,12 +1,14 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/Comics">Comic's list</router-link> |
-      <router-link to="/Characters">Character's list</router-link> 
+      <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'ComicsList'})">Comic's list</v-btn>
+
+      <v-btn medium class="btnHome" elevation="2" color="primary" @click="$router.push({ name: 'Home'})">Home</v-btn>
+      
+      <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'CharactersList'})">Character's list</v-btn>
     </div>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <style lang="scss">
@@ -16,6 +18,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-image: url('assets/mavel_wall.png') !important;
+  background-size: 100%;
+  height: 100vh;
 }
 
 #nav {
@@ -29,5 +34,9 @@
       color: #42b983;
     }
   }
+}
+
+.btnHome {
+  margin: 10px;
 }
 </style>

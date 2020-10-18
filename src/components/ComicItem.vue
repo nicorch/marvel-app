@@ -1,25 +1,28 @@
 
 <template>
-    <div>
-        <div v-if="loading">
-            Loading... 
-        </div>
+    <div class="itemVue">
+        <v-progress-circular v-if="loading"
+        indeterminate
+        color="amber"
+        ></v-progress-circular>
         <div v-else>
             <v-row>
                 <v-col cols="5">
+                    <v-hover v-slot:default="{ hover }">
                     <center>
                         <v-img :src="getImgPath(comic)" alt="" width="300px"> 
                             <!-- Transform getImgPath to computed -->
-                            <!-- <v-expand-transition>
+                            <v-expand-transition v-if="comic.prices[0].price">
                                 <div
                                     v-if="hover"
                                     class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
                                     style="height: 100%;">
-                                    $14.99
+                                    {{comic.prices[0].price}} $
                                 </div>
-                            </v-expand-transition> -->
+                            </v-expand-transition>
                         </v-img>
                     </center>
+                    </v-hover>
                 </v-col>
                 <v-col cols="7" class="container-infos-comic">
                     <div class="comic-title">
@@ -104,9 +107,6 @@ export default {
             infoCharacters: null
         }
     },
-    created () {
-        
-    },
     filters: {
         formatDate(value) {
             if (value) {
@@ -163,5 +163,18 @@ export default {
 
 .container-infos-comic li {
     list-style: none;
+}
+
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .7;
+  position: absolute;
+  width: 100%;
+}
+
+.v-progress-circular {
+    top: 50%;
 }
 </style>

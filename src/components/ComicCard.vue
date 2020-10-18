@@ -1,6 +1,9 @@
 <template>
   <v-col cols="3" class="comic-item-card">
-      <div v-if="loading">Loading</div>
+      <v-progress-circular v-if="loading"
+        indeterminate
+        color="amber"
+        ></v-progress-circular>
       <div v-else-if="comic">
             <v-card class="card text-left" elevation="2" shaped>
                 <router-link :to="{name: 'ComicItem', params: {id: id}}">

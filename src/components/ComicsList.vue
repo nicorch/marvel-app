@@ -1,11 +1,10 @@
 <template>
-    <v-container>
-        <h2>comics list</h2>
-        <v-row v-if="loading">
-            <v-col cols="12">
-              Loading ...
-              </v-col> 
-        </v-row>
+    <v-container class="intern">
+        <h1>Comic's List</h1>
+        <v-progress-circular v-if="loading"
+        indeterminate
+        color="amber"
+        ></v-progress-circular>
         <v-row v-else>
             <ComicCard v-for="comic in comics" :id="comic.id" :key="comic.id"></ComicCard>
         </v-row>
@@ -16,6 +15,7 @@
 <script>
 import ComicCard from './ComicCard.vue';
 import axios from 'axios'
+import './../assets/styles.css';
 
 export default {
   name: 'ComicsList',
@@ -45,5 +45,7 @@ export default {
 </script>
 
 <style>
-
+.v-progress-circular {
+    top: 50%;
+}
 </style>
