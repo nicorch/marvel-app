@@ -135,6 +135,23 @@ export default {
         getImgPath(comic) {
             return comic.thumbnail.path + '.' + comic.thumbnail.extension;
         }
+    },
+    computed: {
+        // todo writer
+        writers: function() {
+            var writers = '';
+            if (this.comic.creators['items'].length > 0) {
+                for (let index = 0; index < this.comic.creators['items'].length; index++) {
+                    const creator = this.comic.creators['items'][index];
+                    if (creator.role == 'writer') {
+                        writers = writers + creator.name;
+                    }
+                }
+            } else {
+                writers = "n/a";
+            }
+            return writers;
+        }
     }
 }
 </script>
