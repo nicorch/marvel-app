@@ -1,14 +1,14 @@
 <template>
-  <v-app id="app">
-    <div id="nav">
+  <div id="app">
+    <!-- <div id="nav">
       <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'ComicsList'})">Comic's list</v-btn>
 
       <v-btn medium class="btnHome" elevation="2" color="primary" @click="$router.push({ name: 'Home'})">Home</v-btn>
       
       <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'CharactersList'})">Character's list</v-btn>
-    </div>
+    </div> -->
     <router-view/>
-  </v-app>
+  </div>
 </template>
 
 <style lang="scss">
@@ -18,7 +18,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-image: url('assets/mavel_wall.png') !important;
+  //background-image: url('assets/mavel_wall.png') !important;
   background-size: 100%;
   height: 100vh;
 }
