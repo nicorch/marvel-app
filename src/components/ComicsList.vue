@@ -2,8 +2,8 @@
     <v-container class="intern">
         <h1>Comic's List</h1>
         <v-progress-circular v-if="loading"
-        indeterminate
-        color="amber"
+          indeterminate
+          color="amber"
         ></v-progress-circular>
         <v-row v-else>
             <ComicCard v-for="comic in comics" :id="comic.id" :key="comic.id"></ComicCard>
@@ -20,7 +20,6 @@ import './../assets/styles.css';
 export default {
   name: 'ComicsList',
   components: {
-    // Demo,
     ComicCard,
   },
   data () {
