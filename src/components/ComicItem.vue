@@ -1,197 +1,162 @@
-
 <template>
-    <div class="itemVue">
-        <v-progress-circular v-if="loading"
-        indeterminate
-        color="amber"
-        ></v-progress-circular>
-        <div v-else>
-            <v-row>
-                <v-col cols="5">
-                    <v-hover v-slot:default="{ hover }">
-                    <center>
-                        <v-img :src="getImgPath(comic)" alt="" width="300px"> 
-                            <!-- Transform getImgPath to computed -->
-                            <v-expand-transition v-if="comic.prices[0].price">
-                                <div
-                                    v-if="hover"
-                                    class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-3 white--text"
-                                    style="height: 100%;">
-                                    {{comic.prices[0].price}} $
-                                </div>
-                            </v-expand-transition>
-                        </v-img>
-                    </center>
-                    </v-hover>
-                </v-col>
-                <v-col cols="7" class="container-infos-comic">
-                    <div class="comic-title">
-                        <p class="comic-title-text">
-                            {{ comic.title }}
-                        </p>
-                    </div>
-                    <div v-if="comic.description" class="comic-description">
-                        <p class="comic-description-text " :inner-html.prop="comic.description">
-                        </p>
-                    </div>
-                    <div v-else>
-                        <p>
-                            Il n'y a pas de description.
-                        </p>
-                    </div>
-                    <v-row>
-                        <v-col cols="6">
-                            <v-text class="published">Published :</v-text> <br>
-                            <v-text>{{ comic.dates[0].date | formatDate }}</v-text>
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text class="published">Writer :</v-text> <br>
-                            <ul v-for="creator in comic.creators['items']" :key="creator.id">
-                                <!-- TODO Computed writers() -->
-                                <li v-if="creator.role == 'writer'">
-                                    {{creator.name}}
-                                </li>
-                            </ul>
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text class="published">Penciller (cover) :</v-text> <br>
-                            <ul v-for="creator in comic.creators['items']" :key="creator.id">
-                                <!-- TODO Computed pencillerCover() -->
-                                <li v-if="creator.role == 'penciller (cover)'">
-                                    {{creator.name}}
-                                </li>
-                            </ul>
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text class="published">Penciller :</v-text> <br>
-                            <ul v-for="creator in comic.creators['items']" :key="creator.id">
-                                <!-- TODO Computed penciller() -->
-                                <li v-if="creator.role == 'penciller' || creator.role == 'penciller (cover)'">
-                                    {{creator.name}}
-                                </li>
-                            </ul>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-            <v-divider></v-divider>
-            <h4>Related Characters</h4>
-            <v-container v-if="infoCharacters.data.count == 0">
-                Nothing
-            </v-container>
-            <v-container v-else>
-                <v-row>
-                    <CharacterCard v-for="character in infoCharacters.data.results" :id="character.id" :key="character.id"></CharacterCard>
-                </v-row>
-            </v-container>
-        </div>
-    </div>
+  <b-container>
+    <b-row v-if="loading">
+      <Spinner />
+    </b-row>
+    <div class="row text-dark pt-4" v-else>
+      <div class="col-md-4">
+        <b-card
+          overlay
+          :img-src="imageSrc"
+          img-height="550"
+          img-alt="Image"
+          img-top
+          border-variant="dark"
+        >
+        </b-card>
+      </div>
 
+      <div class="col-md-8">
+        <h1 class="mb-4 pt-4" style="font-size:20px;font-family:avengero"> {{comic.title}} </h1>
+        <b-list-group style="text-align: left;">
+
+          <b-list-group-item style="background-color: black;">
+            <div class="propList">Published :</div>
+            <div class="detList text-light"> {{ comic.dates[0].date | formatDate }} </div>
+          </b-list-group-item>
+
+          <b-list-group-item style="background-color: black">
+            <div class="propList">Writers :</div>
+            <div class="detList text-light"> {{writers}} </div>
+          </b-list-group-item>
+
+          <b-list-group-item style="background-color: black">
+            <div class="propList">Penciller :</div>
+            <div style="text-align: justify;" class="detList text-light"> {{penciller}} </div>
+          </b-list-group-item>
+
+          <b-list-group-item style="background-color: black">
+            <div class="propList">Description:</div>
+            <div class="detList text-light" :inner-html.prop="getDescription"></div>
+          </b-list-group-item>
+
+        </b-list-group>
+      </div>
+
+      <h1 class="pt-5" style="margin:0 auto;color:white;font-size:30px" v-if="this.comicsCharacters.length>0">Related Characters</h1>
+      <div class="row pt-3" v-if="this.comicsCharacters.length>0">
+        <div class="col-md-3 col-sm-4 mb-5 mt-3" v-for="(character, i) in comicsCharacters" :key="i">
+          <CharacterCard :character="character" :id="character.id" />
+        </div>
+      </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
-import axios from 'axios';
+import api from "./../services/api"
 import moment from 'moment';
+import Spinner from './Spinner';
 import CharacterCard from './CharacterCard';
+
 
 export default {
     name: 'ComicItem',
     components: {
-        CharacterCard,
+      Spinner,
+      CharacterCard
     },
     data () {
-        return{
-            comic: null,
-            loading: true,
-            errored: false,
-            infoCharacters: null
-        }
+      return{
+        comic: null,
+        comicsCharacters:null,
+        loading: true,
+        errored: false
+      }
     },
     filters: {
-        formatDate(value) {
-            if (value) {
-                return moment(String(value)).format('MMMM DD, YYYY')
-            }
+      formatDate(value) {
+        if (value) {
+          return moment(String(value)).format('MMMM DD, YYYY')
         }
+      }
     },
     async mounted () {
-        const idComic =  this.$route.params.id ;
-        try {
-            const {data} = await axios.get("https://gateway.marvel.com:443/v1/public/comics/"+idComic+"?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92")
-            this.comic = data.data.results[0];
-        } catch (error) {
-            this.errored = true;
-        }
-        try {
-            const {data} = await axios
-            .get("https://gateway.marvel.com:443/v1/public/comics/"+idComic+"/characters?limit=10&apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92")
-            this.infoCharacters = data
-        } catch (error) {
-            this.errored = true;
-        }
-        this.loading = false;
+      const idComic =  this.$route.params.id ;
+      try {
+        const {data} = await api.marvel().fetchByIdComic(idComic)
+        this.comic = data.data.results[0]
+        const response = await api.marvel().fetchByIdCharactersOfComic(idComic)
+        this.comicsCharacters=response.data.data.results
+      }catch (error) {
+        this.errored = true;
+        this.$router.push({name:'not-found'})
+      }
+      setTimeout(this.outLoading, 1000);
     },
     methods: {
-        getImgPath(comic) {
-            return comic.thumbnail.path + '.' + comic.thumbnail.extension;
-        }
+      outLoading:function(){
+        this.loading = false
+      }
     },
     computed: {
-        // todo writer
-        writers: function() {
-            var writers = '';
-            if (this.comic.creators['items'].length > 0) {
-                for (let index = 0; index < this.comic.creators['items'].length; index++) {
-                    const creator = this.comic.creators['items'][index];
-                    if (creator.role == 'writer') {
-                        writers = writers + creator.name;
-                    }
-                }
-            } else {
-                writers = "n/a";
+      imageSrc(){
+        let img=this.comic.thumbnail.path + '.' + this.comic.thumbnail.extension
+        return img;
+      },
+      getDescription(){
+        let desc=""
+        if(!this.comic.description)
+          desc="Il n'y a pas de description."
+        else
+          desc=this.comic.description
+        return desc
+      },
+      writers() {
+        let writers = "";
+        const {items} =this.comic.creators;
+        if (items.length > 0) {
+          items.forEach(element => {
+            if(element.role==="writer"){
+              writers += element.name + ", "
             }
-            return writers;
+          }); 
         }
+        return writers.slice(0, -2)
+      },
+      penciller() {
+        let penciller = "";
+        const {items} =this.comic.creators;
+        if (items.length > 0) {
+          items.forEach(element => {
+            if(element.role==="penciller" || element.role==="penciller (cover)"){
+              penciller += element.name + ", "
+            }
+          }); 
+        }
+        return penciller.slice(0, -2)
+      }
     }
-}
+  }
 </script>
 
 <style>
-.comic-title {
-    margin-bottom: 10px;
+
+.list-group-item:hover{
+  opacity: 0.5;
 }
-.comic-title-text {
-    font-weight: bold;
-    text-align: start;
-    font-size: 25px;
+.propList{
+  width:30%;
+  float:left;
+  font-weight:bold;
+  color:#e62429
+}
+.detList{
+  width: 68%;
+  float: left;
+}
+.related{
+  text-align: center;
 }
 
-.comic-description {
-    
-}
-
-.container-infos-comic {
-    text-align: start;
-}
-.published {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.container-infos-comic li {
-    list-style: none;
-}
-
-.v-card--reveal {
-  align-items: center;
-  bottom: 0;
-  justify-content: center;
-  opacity: .7;
-  position: absolute;
-  width: 100%;
-}
-
-.v-progress-circular {
-    top: 50%;
-}
 </style>
