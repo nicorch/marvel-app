@@ -16,7 +16,7 @@
 <script>
 import ComicCard from './ComicCard.vue';
 import Spinner from './Spinner';
-import axios from 'axios'
+import api from "./../services/api";
 import './../assets/styles.css';
 
 export default {
@@ -39,7 +39,7 @@ export default {
   },
   async mounted() {
     try {
-      const {data} = await axios.get('https://gateway.marvel.com:443/v1/public/comics?limit=27&hash=8ffd6a155254bc99459933656517cf50&ts=timestamp&apikey=c37ea365e6a1a371ef21f714e01af669')
+      const {data} = await api.marvel().fetchAllComics()
       //Get all 27 comic as a table of objects, that contain : id,title,description,image(path.extension),creators,characters
       this.comics = data.data.results
     } catch (error) {

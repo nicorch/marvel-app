@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import CharacterCard from './CharacterCard';
+import api from "./../services/api";
 import Spinner from './Spinner';
 
 export default {
@@ -43,10 +43,9 @@ export default {
   },
   async mounted() {
     try {
-      const {data} = await axios.get("https://gateway.marvel.com:443/v1/public/characters?hash=8ffd6a155254bc99459933656517cf50&ts=timestamp&apikey=c37ea365e6a1a371ef21f714e01af669&limit=40")
+      const {data} = await api.marvel().fetchAllCharacters()
       //Get characters as a table of objects, that contain : id,name,description,image(path.extension),comics
       this.allCharacters = data.data.results;
-      this.charactersToDisplay=this.allCharacters;
     } catch (error) {
       this.errored = true;
     }
