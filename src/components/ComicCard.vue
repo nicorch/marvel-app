@@ -1,68 +1,58 @@
 <template>
-  <v-col cols="3" class="comic-item-card">
-      <v-progress-circular v-if="loading"
-        indeterminate
-        color="amber"
-        ></v-progress-circular>
-      <div v-else-if="comic">
-            <v-card class="card text-left" elevation="2" shaped>
-                <router-link :to="{name: 'ComicItem', params: {id: id}}">
-                    <v-img :src="getImgPath(comic)" alt=""></v-img>
-                    <!-- computed -->
-                </router-link>
-                    <v-card-title>{{ comic.title }}</v-card-title>
-            </v-card>
-        </div>
-        <div v-else>
-            Nothing
-        </div>
-  </v-col>
+  <b-card
+    header-class="card_header"
+    :header="comic.title"
+    text-variant="white"
+    class="text-center cardStyle"
+    :img-src="imageSrc"
+    img-height="500"
+    img-top
+  >
+    <b-button variant="dark">
+      <RouterLink style="color: inherit;text-decoration: none;" :to="{name: 'ComicItem', params: {id: id}}" >
+        Plus d'infos
+      </RouterLink>
+    </b-button>
+  </b-card>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
     name: 'ComicCard',
     props: {
-        id: null,
+        id: Number,
+        comic: Object
     },
     data() {
-        return {
-            comic: null,
-            url_item: null,
-            loading: true,
-        }
+      return {
+      }
     },
     methods: {
-        getImgPath(comic) {
-            return comic.thumbnail.path + '.' + comic.thumbnail.extension;
+      getPartOfDescription(description){
+        if(!description){
+          return "Pas de description"
         }
+        return description.slice(0,90) + "..."
+      }
     },
-    async mounted() {
-        try {
-            const response = await axios.get('https://gateway.marvel.com:443/v1/public/comics/'+this.id+'?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92');
-            this.comic = response.data.data.results[0];
-        } catch (error) {
-            console.log(error);
-        }
-        this.loading = false
+    computed:{
+      imageSrc(){
+        let img=this.comic.thumbnail.path + '.' + this.comic.thumbnail.extension
+        return img;
+      }
     }
 }
 </script>
 
 <style>
-.comic-item-card {
-    /* background-color: black;
-    width: 200px; */
-}
-.comic-item-card .card-title {
-    /* color: white; */
+.cardStyle{
+    background-color: #e62429 !important;
+    border: none;
 }
 
-.comic-item-card img {
-    width: calc(100% - 10px);
-    margin: 5px;
-    align-content: center;
+.card-header{
+  font-size: 14px;
+  font-family: avengero;
 }
+
 </style>
