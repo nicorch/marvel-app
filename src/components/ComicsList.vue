@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        <h1>Liste des comics</h1>
+        <h1>Liste des comics marvel</h1>
         <!-- <v-progress-circular v-if="loading"
           indeterminate
           color="amber"

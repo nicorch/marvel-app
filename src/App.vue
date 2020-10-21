@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <div id="player">
+    <iframe src="./assets/music/avangers.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
+    <audio id="player" autoplay loop>
+    <source src="./assets/music/avangers.mp3" type="audio/mp3">
+</audio>
+    </div>
     <!-- <div id="nav">
       <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'ComicsList'})">Comic's list</v-btn>
 
