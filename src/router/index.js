@@ -5,6 +5,7 @@ import ComicItem from './../components/ComicItem.vue'
 import ComicsList from './../components/ComicsList.vue'
 import CharactersList from './../components/CharactersList.vue'
 import CharacterItem from './../components/CharacterItem.vue'
+import E404 from './../components/E404.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     name: 'CharacterItem',
     component: CharacterItem
   },
+  {
+    path: '/not-found',
+    name: 'not-found',
+    component: E404
+  }
 ]
 
 const router = new VueRouter({

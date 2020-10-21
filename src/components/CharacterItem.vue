@@ -67,11 +67,13 @@ export default {
     async mounted () {
         const idCharacter =  this.$route.params.id ;
         try {
-            
             const {data} = await axios.get("https://gateway.marvel.com:443/v1/public/characters/"+idCharacter+"?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92&")
+            console.log("aa" +data);
             this.info = data.data
+            //
         } catch (error) {
             this.errored = true;
+            this.$router.push({name:'not-found'})
         }
         try {
             const {data} = await axios
@@ -80,7 +82,6 @@ export default {
         } catch (error) {
             this.errored = true;
         }
-
         this.loading = false;
     },
     methods: {
