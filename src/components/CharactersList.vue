@@ -54,7 +54,7 @@ export default {
   },
   computed:{
       charactersToDisplay(){
-        let charactersToDisplay
+        let charactersToDisplay=[]
         if(this.searchText==""){
           charactersToDisplay=this.allCharacters
         }
