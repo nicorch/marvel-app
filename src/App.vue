@@ -17,10 +17,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
+  background-color: #181718;
   //background-image: url('assets/mavel_wall.png') !important;
-  background-size: 100%;
-  height: 100vh;
+  //background-size: 100%;
 }
 
 #nav {
