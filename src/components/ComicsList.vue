@@ -1,14 +1,10 @@
 <template>
     <b-container>
         <h1>Liste des comics marvel</h1>
-        <!-- <v-progress-circular v-if="loading"
-          indeterminate
-          color="amber"
-        ></v-progress-circular>
-        <v-row v-else>
-            <ComicCard v-for="comic in comics" :id="comic.id" :key="comic.id"></ComicCard>
-        </v-row> -->
-        <div class="row pt-4">
+        <b-row v-if="loading">
+          <Spinner />
+        </b-row>
+        <div class="row pt-4" v-else>
           <div class="col-md-4 col-sm-6 mb-5 mt-3" v-for="(comic, i) in comics" :key="i">
             <ComicCard :comic="comic" :id="comic.id" />
           </div>
@@ -19,19 +15,26 @@
 
 <script>
 import ComicCard from './ComicCard.vue';
+import Spinner from './Spinner';
 import axios from 'axios'
 import './../assets/styles.css';
 
 export default {
   name: 'ComicsList',
   components: {
-    ComicCard
+    ComicCard,
+    Spinner
   },
   data () {
     return {
       loading: true,
       errored: false,
       comics: []
+    }
+  },
+  methods:{
+    outLoading:function(){
+      this.loading = false
     }
   },
   async mounted() {
@@ -42,7 +45,7 @@ export default {
     } catch (error) {
       this.errored = true
     }
-    this.loading = false
+    setTimeout(this.outLoading, 900);
   }
 }
 

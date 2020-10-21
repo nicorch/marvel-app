@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div class="titleHome">
-      <h1>API Marvel - Groupe D</h1>
-    </div>
+  <div class="homepage">
   </div>
 </template>
 
@@ -14,4 +11,11 @@
 .titleHome {
   color: white;
 }
+
+.homepage{
+  background-image: url("./../assets/marvel4.jpg");
+  background-size: cover;
+  height:90.4vh;
+}
+
 </style>
