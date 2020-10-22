@@ -115,26 +115,32 @@ export default {
       writers() {
         let writers = "";
         const {items} =this.comic.creators;
-        if (items.length > 0) {
+        if (items.length > 1) {
           items.forEach(element => {
             if(element.role==="writer"){
               writers += element.name + ", "
             }
           }); 
+          writers = writers.slice(0, -2);
+        } else {
+          writers = 'N/A';
         }
-        return writers.slice(0, -2)
+        return writers;
       },
       penciller() {
         let penciller = "";
         const {items} =this.comic.creators;
-        if (items.length > 0) {
+        if (items.length > 1) {
           items.forEach(element => {
             if(element.role==="penciller" || element.role==="penciller (cover)"){
               penciller += element.name + ", "
             }
           }); 
+          penciller = penciller.slice(0, -2);
+        } else {
+          penciller = 'N/A';
         }
-        return penciller.slice(0, -2)
+        return penciller;
       }
     }
   }
