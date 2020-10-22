@@ -44,6 +44,7 @@
       </div>
 
       <h1 class="pt-5" style="margin:0 auto;color:white;font-size:30px" v-if="this.comicsCharacters.length>0">Related Characters</h1>
+      <h1 class="pt-5" style="margin:15px auto;color:white;font-size:30px" v-else>No Related Characters</h1>
       <div class="row pt-3" v-if="this.comicsCharacters.length>0">
         <div class="col-md-3 col-sm-4 mb-5 mt-3" v-for="(character, i) in comicsCharacters" :key="i">
           <CharacterCard :character="character" :id="character.id" />
@@ -147,7 +148,6 @@ export default {
 </script>
 
 <style>
-
 .list-group-item:hover{
   opacity: 0.5;
 }

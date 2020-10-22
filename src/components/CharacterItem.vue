@@ -29,6 +29,7 @@
       </div>
 
       <h1 class="pt-5" style="margin:0 auto;color:white;font-size:30px" v-if="this.charactersComics.length > 0">Related Comics</h1>
+      <h1 class="pt-5" style="margin:15px auto;color:white;font-size:30px" v-else>No Related Comics</h1>
       <div class="row pt-3" v-if="this.charactersComics.length>0">
         <div class="col-md-4 col-sm-6 mb-5 mt-3" v-for="(comic, i) in charactersComics" :key="i">
           <ComicCard :comic="comic" :id="comic.id" />
