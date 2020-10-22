@@ -44,6 +44,8 @@ export default {
       this.comics = data.data.results
     } catch (error) {
       this.errored = true
+      this.$router.push({name:'not-found'})
+
     }
     setTimeout(this.outLoading, 900);
   }
