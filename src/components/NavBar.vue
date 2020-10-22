@@ -10,6 +10,12 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <div id="player">
+        <iframe src="./../assets/music/avangers.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
+        <audio id="player" autoplay loop>
+          <source src="./../assets/music/avangers.mp3" type="audio/mp3">
+        </audio>
+      </div> 
   </b-container>
 </template>
 

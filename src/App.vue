@@ -1,12 +1,6 @@
 <template>
   <div id="app">
     <NavBar />
-    <!-- <div id="player">
-      <iframe src="./assets/music/avangers.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
-      <audio id="player" autoplay loop>
-        <source src="./assets/music/avangers.mp3" type="audio/mp3">
-      </audio>
-    </div> -->
     <router-view/>
   </div>
 </template>
