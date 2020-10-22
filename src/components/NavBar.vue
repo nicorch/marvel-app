@@ -1,7 +1,7 @@
 <template id="aa">
   <b-container>
     <b-navbar toggleable="lg" type="dark" id="myNav">
-      <b-navbar-brand ><span class="brand">Marvel Application</span></b-navbar-brand>
+      <b-navbar-brand @click="$router.push({ name: 'Home'})"><span class="brand">Marvel Application</span></b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
@@ -23,6 +23,7 @@ export default {
 .brand{
   font-family: marvel;
   font-size: 45px;
+  cursor: pointer;
 }
 
 .btnNav{
