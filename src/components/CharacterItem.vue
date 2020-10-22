@@ -1,118 +1,115 @@
 <template>
-    <div>
-        <div v-if="loading">
-            Loading... 
-        </div>
-        <div v-else>
-            <v-row>
-                <v-col cols="5">
-                    <center>
-                        
-                    <v-img :src="getImgPath(info.results[0])" alt="" width="300px"></v-img>
-                    </center>
-                </v-col>
-                {{ info.results.name }}
-                <v-col cols="7" class="container-infos-character">
-                    <div class="character-name">
-                        <p class="character-name-text">
-                            {{ info.results[0].name }}
-                        </p>
-                    </div>
-                    <div v-if="info.results[0].description" class="character-description">
-                        <p class="character-description-text " :inner-html.prop="info.results[0].description">
-                        </p>
-                    </div>
-                    <div v-else>
-                        <p>
-                            Il n'y a pas de description.
-                        </p>
-                    </div>
-                </v-col>
+  <b-container>
+    <b-row v-if="loading">
+      <Spinner />
+    </b-row>
+    <div class="row text-dark pt-4" v-else>
+      <div class="col-md-4">
+        <b-card
+          overlay
+          :img-src="imageSrc"
+          img-height="400"
+          img-alt="Image"
+          img-top
+          border-variant="dark"
+        >
+        </b-card>
+      </div>
 
-            </v-row>
-            <v-divider></v-divider>
-            <h4>Related Comics</h4>
-            <v-container v-if="infoComics.count == 0">
-                Nothing
-            </v-container>
-            <v-container v-else>
-                <v-row>
-                    <ComicCard v-for="comic in infoComics" :id="comic.id" :key="comic.id"></ComicCard>
-                </v-row>
-            </v-container>
+      <div class="col-md-8">
+        <h1 class="mb-4 pt-4" style="font-size:20px;font-family:avengero"> {{character.name}} </h1>
+        <b-list-group style="text-align: left;">
+            
+          <b-list-group-item style="background-color: black">
+            <div class="propList">Description:</div>
+            <div class="detList text-light" :inner-html.prop="getDescription"></div>
+          </b-list-group-item>
+
+        </b-list-group>
+      </div>
+
+      <h1 class="pt-5" style="margin:0 auto;color:white;font-size:30px" v-if="this.charactersComics.length > 0">Related Comics</h1>
+      <div class="row pt-3" v-if="this.charactersComics.length>0">
+        <div class="col-md-4 col-sm-6 mb-5 mt-3" v-for="(comic, i) in charactersComics" :key="i">
+          <ComicCard :comic="comic" :id="comic.id" />
         </div>
+      </div>
     </div>
+  </b-container>
 </template>
 
 <script>
-import axios from 'axios';
+import api from "./../services/api"
+import Spinner from './Spinner';
 import ComicCard from './ComicCard';
+
 
 export default {
     name: 'CharacterItem',
     components: {
-        ComicCard,
+      Spinner,
+      ComicCard
     },
     data () {
-        return{
-            info: null,
-            loading: true,
-            errored: false,
-            infoComics: null
-        }
-    },
-    created () {
-        
+      return{
+        character: null,
+        charactersComics:null,
+        loading: true,
+        errored: false
+      }
     },
     async mounted () {
-        const idCharacter =  this.$route.params.id ;
-        try {
-            const {data} = await axios.get("https://gateway.marvel.com:443/v1/public/characters/"+idCharacter+"?apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92&")
-            console.log("aa" +data);
-            this.info = data.data
-            //
-        } catch (error) {
-            this.errored = true;
-            this.$router.push({name:'not-found'})
-        }
-        try {
-            const {data} = await axios
-            .get("https://gateway.marvel.com:443/v1/public/characters/"+idCharacter+"/comics?limit=10&apikey=55dd7a6256658f33a00034a161f9c8f7&ts=1&hash=8e821d4269b2d7f35e61d11ecd39ff92")
-            this.infoComics = data.data.results
-        } catch (error) {
-            this.errored = true;
-        }
-        this.loading = false;
+      const idCharacter =  this.$route.params.id
+      try {
+        const {data} = await api.marvel().fetchByIdCharacter(idCharacter)
+        this.character = data.data.results[0]
+        const response = await api.marvel().fetchByIdComicsOfCharacter(idCharacter)
+        this.charactersComics=response.data.data.results
+      }catch (error) {
+        this.errored = true;
+        this.$router.push({name:'not-found'})
+      }
+      setTimeout(this.outLoading, 1000);
     },
     methods: {
-        getImgPath(info) {
-            return info.thumbnail.path + '.' + info.thumbnail.extension;
-        }
+      outLoading:function(){
+        this.loading = false
+      }
+    },
+    computed: {
+      imageSrc(){
+        let img=this.character.thumbnail.path + '.' + this.character.thumbnail.extension
+        return img;
+      },
+      getDescription(){
+        let desc=""
+        if(!this.character.description)
+          desc="Il n'y a pas de description."
+        else
+          desc=this.character.description
+        return desc
+      }
     }
-
-}
+  }
 </script>
 
 <style>
 
-.character-name {
-    margin-bottom: 10px;
+.list-group-item:hover{
+  opacity: 0.5;
 }
-.character-name-text {
-    font-weight: bold;
-    text-align: start;
-    font-size: 25px;
+.propList{
+  width:30%;
+  float:left;
+  font-weight:bold;
+  color:#e62429
+}
+.detList{
+  width: 68%;
+  float: left;
+}
+.related{
+  text-align: center;
 }
 
-.container-infos-character {
-    text-align: start;
-}
-.published {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.container-infos-character li {
-    list-style: none;
-}
 </style>
