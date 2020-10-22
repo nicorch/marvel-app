@@ -17,5 +17,4 @@
   background-size: cover;
   height:90.4vh;
 }
-
 </style>

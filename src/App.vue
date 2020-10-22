@@ -7,13 +7,6 @@
         <source src="./assets/music/avangers.mp3" type="audio/mp3">
       </audio>
     </div> -->
-    <!-- <div id="nav">
-      <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'ComicsList'})">Comic's list</v-btn>
-
-      <v-btn medium class="btnHome" elevation="2" color="primary" @click="$router.push({ name: 'Home'})">Home</v-btn>
-      
-      <v-btn small  elevation="2" color="error" @click="$router.push({ name: 'CharactersList'})">Character's list</v-btn>
-    </div> -->
     <router-view/>
   </div>
 </template>
@@ -38,8 +31,6 @@ export default {
   background-color: #181718;
   height: 100%;
   min-height: 100vh;
-  //background-image: url('assets/marvel.jpg') !important;
-  //background-size: 100vh;
 }
 
 #nav {
@@ -57,6 +48,5 @@ export default {
 
 .btnHome {
   margin: 10px;
-
 }
 </style>
