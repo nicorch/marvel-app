@@ -2,10 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-
-#app {
-    background-image: url('marvel_back.jpg');
+@font-face {
+    font-family: avengero;
+    src: url("../assets/fonts/AvengeroRegular-zvgl.ttf");
 }
+
+@font-face {
+    font-family: marvel;
+    src: url("../assets/fonts/Avengeance-YolO.ttf");
+}
+
+@font-face {
+    font-family: american;
+    src: url("../assets/fonts/AmericanKestrelExpanded-nzxg.otf");
+}
+
 
 .itemVue {
     background-color: #000000d8;
