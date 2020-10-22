@@ -37,7 +37,7 @@ export default {
   color: black;
   background-color: #181718;
   height: 100%;
-  // min-height: 970px;
+  min-height: 100vh;
   //background-image: url('assets/marvel.jpg') !important;
   //background-size: 100vh;
 }
