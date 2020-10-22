@@ -59,7 +59,7 @@ export default {
           charactersToDisplay=this.allCharacters
         }
         else{
-          charactersToDisplay=this.allCharacters.filter(c=>c.name.toLowerCase().includes(this.searchText))
+          charactersToDisplay=this.allCharacters.filter(c=>c.name.toLowerCase().includes(this.searchText.toLowerCase()))
         }
         return charactersToDisplay
       }
