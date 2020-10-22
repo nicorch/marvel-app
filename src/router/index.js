@@ -36,7 +36,7 @@ const routes = [
     component: CharacterItem
   },
   {
-    path: '/not-found',
+    path: '*',
     name: 'not-found',
     component: E404
   }
